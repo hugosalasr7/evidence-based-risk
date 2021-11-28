@@ -6,6 +6,9 @@ Author: Hugo Salas;
 ``` r
 # Import the code that contains the functions
 source("Risk_util_functions.R")
+
+library(knitr)
+opts_chunk$set(dev="png")
 ```
 
 ### 1) Basics
@@ -30,7 +33,7 @@ and the process is repeated. In other words, if each player rolled more
 than one die, then each player can lose 2 armies. The following image
 explains this process clearly:
 
-![](risk_dice_rule.PNG)
+![](Risk_example_use_files/risk_dice_rule.PNG)
 
 For more information about the game and its rules, please visit the
 following [link](https://www.ultraboardgames.com/risk/game-rules.php).
@@ -94,7 +97,9 @@ text(1.25, 0.6, "Defender threw 1 die", srt = -10)
 title("Armies lost by the attacker", adj = 0, line = 1)
 ```
 
-![](Risk_example_use_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](Risk_example_use_files/figure-gfm/fig_1-1.png)<!-- -->
+
+![](Risk_example_use_files/figure-gfm/fig_1-1.PNG)
 
 When the defender throws 1 die, we should throw as many dice as possible
 if we want to minimize our army loss. However, if the defender throws 2
@@ -124,7 +129,9 @@ text(1.25, 0, "Defender threw 1 die", srt = 15)
 title("Net damage taken by defender", adj = 0, line = 1)
 ```
 
-![](Risk_example_use_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](Risk_example_use_files/figure-gfm/fig_2-1.png)<!-- -->
+
+![](Risk_example_use_files/figure-gfm/fig_2-1.PNG)
 
 As we see in the graph, as the number of dice thrown by attacker
 increases, the net damage taken by the opponent (damage taken by the
@@ -147,7 +154,9 @@ barplot(t(mcsim_prob[mcsim_prob[,7] == 1,c(3,4)]) , main="",
 title("Defender throws 1 die", adj = 0, line = 1)
 ```
 
-![](Risk_example_use_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](Risk_example_use_files/figure-gfm/fig_3-1.png)<!-- -->
+
+![](Risk_example_use_files/figure-gfm/fig_3-1.PNG)
 
 If the defender throws one die, the probability of losing one army
 decreases as the number of dice thrown by attacker increases.
@@ -162,7 +171,9 @@ barplot(t(mcsim_prob[mcsim_prob[,7] == 2,c(3,4,5)]) , main="",
 title("Defender throws 2 dice", adj = 0, line = 1)
 ```
 
-![](Risk_example_use_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](Risk_example_use_files/figure-gfm/fig_4-1.png)<!-- -->
+
+![](Risk_example_use_files/figure-gfm/fig_4-1.PNG)
 
 If the defender throws two dice, the probability of not losing any
 troops increases with the number of dice thrown. The probability of
@@ -217,7 +228,9 @@ text(3.5, 0.61, "Defender has two armies", srt = -28)
 title("Probability that an attack will result in defeat", adj = 0, line = 1)
 ```
 
-![](Risk_example_use_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](Risk_example_use_files/figure-gfm/fig_5-1.png)<!-- -->
+
+![](Risk_example_use_files/figure-gfm/fig_5-1.PNG)
 
 As shown above, if we lose 2 troops in the first roll, we will have 5
 troops left and the defender would still own 2. That would decrease our
