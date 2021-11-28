@@ -20,11 +20,11 @@ simulate_turn <- function(dice_a, dice_d){
   if ((dice_a>3) | (dice_a<1) | (dice_d>2) | (dice_d<1)){
     stop("One of these conditions is not being fulfilled: 0 > dice_a > 3, 0 > dice_d > 2")
   }
-
-  lost_armies = matrix(data = 0, nrow = 1, ncol = min_dice)
-  colnames(lost_armies) = c("Attacker", "Defender")
   
   min_dice = min(dice_a, dice_d)
+  lost_armies = matrix(data = 0, nrow = 1, ncol = 2)
+  colnames(lost_armies) = c("Attacker", "Defender")
+  
   attacker = sample(1:6, dice_a, replace = TRUE) ##Attacker throws dice 
   attacker = sort(attacker, decreasing = TRUE) 
   defender = sample(1:6, dice_d, replace = TRUE) #Defender throws dice
@@ -42,6 +42,45 @@ simulate_turn <- function(dice_a, dice_d){
   return(lost_armies)
 }
 
+
+montecarlo_sim_turn <- function(dice_a, dice_d, seed = 12345, reps = 10000){
+  
+  # Performs Monte-Carlo simulations (reps) times, of the simulate_turn function
+  # based on the (seed) set as input.
+  
+  # Inputs:
+  #     dice_a (int): # of dice that the attacker will roll (1,2,3)
+  #     dice_d (int): # of dice that the defender will roll (1,2)
+  #     seed: Random seed to be used during the simulations
+  #     reps: # of repetitions/simulations that will be executed
+  
+  # Output:
+  #     List with 5 elements:
+  #         1. Expected losses for attacker 
+  #         2. Expected losses for defender
+  #         3. Probability that attacker loses 0 armies
+  #         4. Probability that attacker loses 1 armies
+  #         5. Probability that attacker loses 2 armies
+
+  
+  set.seed(seed)
+  sim_results = matrix(data = NA, nrow = reps, ncol = 2)
+  
+  for (i in 1:reps){
+    sim_results[i, ] = simulate_turn(dice_a,dice_d)
+  }
+  
+  rmatrix = matrix(data = c(mean(sim_results[,1]), mean(sim_results[,2]),
+                       mean(sim_results[,1]==0), mean(sim_results[,1]==1),
+                       mean(sim_results[,1]==2), dice_a, dice_d), nrow = 1, ncol = 7)
+  colnames(rmatrix) = c("Expected loss: attacker", "Expected loss: defender", 
+                        "Prob(attacker loses 0)", "Prob(attacker loses 1)", 
+                        "Prob(attacker loses 2)", "# dice: attacker", 
+                        "# dice: defender")
+  
+  return(rmatrix)
+
+}
 
 
 optim_dice_n <- function(army, attacker = TRUE){
