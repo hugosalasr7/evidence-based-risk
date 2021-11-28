@@ -1,6 +1,10 @@
 ---
 title: "Example use of Risk utility functions"
-output: html_notebook
+author: "Author: Hugo Salas"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+
+
+output: rmarkdown::github_document
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
