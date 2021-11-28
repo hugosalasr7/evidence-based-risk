@@ -11,6 +11,9 @@ output: rmarkdown::github_document
 ```{r}
 # Import the code that contains the functions
 source("Risk_util_functions.R")
+
+library(knitr)
+opts_chunk$set(dev="png")
 ```
 
 ### 1) Basics
@@ -23,7 +26,7 @@ An attack must involve two players: an attacker and a defender. The attacker can
 
 To decide the outcome of a battle, we compare the highest die each player rolled. The defender loses one army when the attacker's die is (strictly) higher than the one of the defenders. If each player rolled more than one die, the second highest die of each player is compared, and the process is repeated. In other words, if each player rolled more than one die, then each player can lose 2 armies. The following image explains this process clearly:
 
-![](risk_dice_rule.PNG) 
+![](Risk_example_use_files/risk_dice_rule.PNG) 
 
 For more information about the game and its rules, please visit the following [link](https://www.ultraboardgames.com/risk/game-rules.php).
 
@@ -56,7 +59,7 @@ for (da in 1:3){
 }
 ```
 
-```{r}
+```{r fig_1}
 
 x <- as.vector(mcsim_prob[mcsim_prob[,7] == 1, c(6)])
 y1 <- as.vector(mcsim_prob[mcsim_prob[,7] == 1, c(1)])
@@ -72,11 +75,13 @@ text(1.25, 0.6, "Defender threw 1 die", srt = -10)
 title("Armies lost by the attacker", adj = 0, line = 1)
 ```
 
+![](Risk_example_use_files/figure-gfm/fig_1-1.PNG) 
+
 When the defender throws 1 die, we should throw as many dice as possible if we want to minimize our army loss. However, if the defender throws 2 dice, the story is a little more puzzling. It seems that our expected loss is minimized when we throw only one die. 
 
 Why does this happen? Because when you throw one die, you can only lose one army at most, but you can also make your opponent lose only one army. When you increase the dice you throw, you are susceptible to losing one additional army, but so is your opponent. So maybe we should look at the differential of both losses: the expected loss of the defender minus the attacker. This way, we can have a measure of the net effect of our attack, which may prove more useful.
-
-```{r}
+ 
+```{r fig_2}
 x <- as.vector(mcsim_prob[mcsim_prob[,7] == 1, c(6)])
 y1 <- as.vector(mcsim_prob[mcsim_prob[,7] == 1, c(2)]) - as.vector(mcsim_prob[mcsim_prob[,7] == 1, c(1)]) 
 y2  <- as.vector(mcsim_prob[mcsim_prob[,7] == 2, c(2)]) - as.vector(mcsim_prob[mcsim_prob[,7] == 2, c(1)]) 
@@ -91,12 +96,14 @@ text(1.25, 0, "Defender threw 1 die", srt = 15)
 title("Net damage taken by defender", adj = 0, line = 1)
 ```
 
+![](Risk_example_use_files/figure-gfm/fig_2-1.PNG) 
+
 As we see in the graph, as the number of dice thrown by attacker increases, the net damage taken by the opponent (damage taken by the defender minus damage taken by attacker) increases too. This means that although throwing more dice increases the expected loss for the attacker, it also increases the expected loss for the defender with a bigger magnitude. Therefore, for the defender to take more damage than the attacker, the attacker needs to throw as many dice as possible. 
 
 ##### c. What's the likelihood of losing armies under each scenario?
 
 
-```{r}
+```{r fig_3}
 barplot(t(mcsim_prob[mcsim_prob[,7] == 1,c(3,4)]) , main="",
    xlab="# dice thrown by attacker", beside = TRUE, names.arg = c("1", "2", "3"),
    ylab = "Probability", legend.text = c("0", "1"),
@@ -107,9 +114,11 @@ barplot(t(mcsim_prob[mcsim_prob[,7] == 1,c(3,4)]) , main="",
 title("Defender throws 1 die", adj = 0, line = 1)
 ```
 
+![](Risk_example_use_files/figure-gfm/fig_3-1.PNG) 
+
 If the defender throws one die, the probability of losing one army decreases as the number of dice thrown by attacker increases.
 
-```{r}
+```{r fig_4}
 barplot(t(mcsim_prob[mcsim_prob[,7] == 2,c(3,4,5)]) , main="",
    xlab="# dice thrown by attacker", beside = TRUE, names.arg = c("1", "2", "3"),
    ylab = "Probability", legend.text = c("0", "1", "2"),
@@ -119,6 +128,8 @@ barplot(t(mcsim_prob[mcsim_prob[,7] == 2,c(3,4,5)]) , main="",
 title("Defender throws 2 dice", adj = 0, line = 1)
 
 ```
+
+![](Risk_example_use_files/figure-gfm/fig_4-1.PNG) 
 
 If the defender throws two dice, the probability of not losing any troops increases with the number of dice thrown. The probability of losing one army also decreases with the number of dice thrown. However, increasing the number of dices thrown by the attacker also increases the probability of losing 2 armies. This is consistent with what we found above, throwing more dice increases the risk of losing 2 troops instead of only one, but it also increases the likelihood that you'll generate more damage to your opponent.
 
@@ -145,7 +156,7 @@ for (i in x){
 ```
 
 
-```{r}
+```{r fig_5}
 plot(x[x!=7], y2[x!=7], type = "b", frame = FALSE, pch = 19, 
      col = "black", xlab = "Armies owned by attacker", ylab = "Probability",
      xlim = rev(range(x)), lwd=4, ylim = c(0,1))
@@ -155,5 +166,7 @@ text(3.5, 0.9, "Defender has one army", srt = -20)
 text(3.5, 0.61, "Defender has two armies", srt = -28)
 title("Probability that an attack will result in defeat", adj = 0, line = 1)
 ```
+
+![](Risk_example_use_files/figure-gfm/fig_5-1.PNG) 
 
 As shown above, if we lose 2 troops in the first roll, we will have 5 troops left and the defender would still own 2. That would decrease our likelihood of success from 0.94 to 0.78. That is still high. But what if we lost two troops again? That would decrease our chances of success to 0.37. If this unlikely scenario happened, it would be better to stop attacking your opponent. Therefore looking at these probabilities dynamically is so important and why it could help our decision making during the game.
