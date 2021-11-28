@@ -11,7 +11,7 @@ the functions available in this repository estimate the probability that, given 
 For more information about the game and its rules, please visit the following [link](<https://www.ultraboardgames.com/risk/game-rules.php>).
 
 <p align="center">
-  <img src="https://github.com/hugosalasr7/evidence-based-risk/blob/main/risk.jpg" alt="drawing" width="400" />
+  <img src="https://github.com/hugosalasr7/evidence-based-risk/blob/main/Risk_example_use_files/risk.jpg" alt="drawing" width="400" />
 </p>
 
 
