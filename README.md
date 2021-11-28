@@ -3,7 +3,7 @@ Risk is a very popular and fun board game. I created this code to inform my deci
 
  1. The probability that, given a number of attacking and defending troops, the player that is defending will lose all of her/his troops.
  2. The (a) expected number and the (b) 95% confidence interval of troops that the attacker will lose if he was succesful in defeating his opponent.
- 3. It can be further generalized to create other quantities of interest. 
+ 3. This code can be further generalized to create other quantities of interest. 
 
 
 the functions available in this repository estimate the probability that, given a number of attacking and defending troops, the player that's defending will lose all of her/his troops. Additionally, it computes the expected number of troops that are expected to go down under this mission. 
