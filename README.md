@@ -17,4 +17,5 @@ For more information about the game and its rules, please visit the following [l
 
 ## Relevant files:
 - ```Risk_util_functions.R```: A script with a set of functions that can be used to simulate an attack in Risk. It contains all of the functions needed to compute the quantities of interest relevant for an attack during the game. 
-- ```Risk_example_use.Rmd```: An example notebook where I show how ```Risk_util_functions.R``` can be used to inform decisionmaking while playing Risk. 
+- ```Risk_example_use.Rmd```: The code of a notebook where I show how ```Risk_util_functions.R``` can be used to inform decisionmaking while playing Risk.
+- ```Risk_example_use.md```: The output of said notebook. 
