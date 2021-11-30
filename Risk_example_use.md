@@ -238,5 +238,4 @@ likelihood of success from 0.94 to 0.78. That is still high. But what if
 we lost two troops again? That would decrease our chances of success to
 0.37. If this unlikely scenario happened, it would be better to stop
 attacking your opponent. Therefore looking at these probabilities
-dynamically is so important and why it could help our decision making
-during the game.
+dynamically is important.
